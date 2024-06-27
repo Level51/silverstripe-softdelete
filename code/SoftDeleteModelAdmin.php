@@ -53,7 +53,7 @@ class SoftDeleteModelAdmin extends Extension
                 }
                 if ($owner::config()->softdelete_from_list) {
                     $exclude = $this->owner->config()->softdelete_from_list_exclude;
-                    if ($exclude && !in_array($modelClass, $exclude)) {
+                    if (!$exclude || (is_array($exclude && !in_array($modelClass, $exclude)))) {
                         $config->addComponent(new GridFieldSoftDeleteAction());
                     }
                 }
