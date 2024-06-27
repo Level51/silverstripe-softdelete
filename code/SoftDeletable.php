@@ -56,7 +56,7 @@ class SoftDeletable extends DataExtension
      * @var array<string,string>
      */
     private static $defaults = array(
-        'DeletedByID' => '-1' // Use -1 to distinguish null from 0
+        'DeletedByID' => '-1', // Use -1 to distinguish null from 0
     );
 
     /**
@@ -172,6 +172,11 @@ class SoftDeletable extends DataExtension
         $labels['DeletedByID'] = _t(__CLASS__ . '.DeletedByID', 'Deleted by ID');
     }
 
+    public function canSoftDelete($member = null)
+    {
+        return $this->owner->canDelete($member);
+    }
+
     /**
      * @param FieldList $actions
      * @return void
@@ -191,8 +196,8 @@ class SoftDeletable extends DataExtension
             }
         }
 
-        // Use canDelete
-        if (!$this->owner->canDelete()) {
+        // Use canSoftDelete (uses canDelete by default, but allows setting separate permissions for softDelete / forceDelete)
+        if (!$this->owner->canSoftDelete()) {
             return;
         }
 
@@ -200,11 +205,13 @@ class SoftDeletable extends DataExtension
             $undoDelete = new CustomAction('undoDelete', _t(__CLASS__ .'.UndoDelete', 'Undo Delete'));
             $actions->push($undoDelete);
 
-            $forceDelete = new CustomAction('forceDelete', _t(__CLASS__ . '.ForceDelete', 'Really Delete'));
-            $forceDelete->setButtonType('outline-danger');
-            $forceDelete->addExtraClass('btn-hide-outline');
-            $forceDelete->setConfirmation(_t(__CLASS__ . '.ForceDeleteConfirm', 'Are you sure? There is no undo'));
-            $actions->push($forceDelete);
+            if ($this->owner->canDelete()) {
+                $forceDelete = new CustomAction('forceDelete', _t(__CLASS__ . '.ForceDelete', 'Really Delete'));
+                $forceDelete->setButtonType('outline-danger');
+                $forceDelete->addExtraClass('btn-hide-outline');
+                $forceDelete->setConfirmation(_t(__CLASS__ . '.ForceDeleteConfirm', 'Are you sure? There is no undo'));
+                $actions->push($forceDelete);
+            }
         } else {
             $softDelete = new CustomAction('softDelete', _t(__CLASS__ .'.SoftDelete', 'Delete'));
             $softDelete->setButtonType('outline-danger');
