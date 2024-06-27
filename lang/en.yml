@@ -1,0 +1,13 @@
+en:
+  GridFieldSoftDeleteAction:
+    DELETE_DESCRIPTION: Delete
+    Delete: Delete
+  SoftDeletable:
+    Deleted: Deleted
+    DeletedByID: Deleted by ID
+    ForceDelete: Really Delete
+    ForceDeleteConfirm: Are you sure? There is no undo
+    SoftDelete: Delete
+    SoftDeleteOnlySearchFilterLabel: Only deleted
+    SoftDeleteSearchFilterLabel: Include deleted
+    UndoDelete: Undo Delete

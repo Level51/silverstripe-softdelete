@@ -1,0 +1,13 @@
+de:
+  GridFieldSoftDeleteAction:
+    DELETE_DESCRIPTION: Löschen
+    Delete: Löschen
+  SoftDeletable:
+    Deleted: Gelöscht
+    DeletedByID: Gelöscht durch ID
+    ForceDelete: Endgültig löschen
+    ForceDeleteConfirm: Bist du dir sicher? Das kann nicht rückgängig gemacht werden
+    SoftDelete: Löschen
+    SoftDeleteOnlySearchFilterLabel: Nur gelöschte anzeigen
+    SoftDeleteSearchFilterLabel: Gelöschte anzeigen
+    UndoDelete: Wiederherstellen
